@@ -4,8 +4,7 @@ import { connect } from 'react-redux';
 import { fbLogin } from '../actions';
 
 class AuthScreen extends Component {
-  async componentDidMount() {
-    await AsyncStorage.removeItem('fb_token');
+  componentDidMount() {
     this.props.fbLogin();
   }
 

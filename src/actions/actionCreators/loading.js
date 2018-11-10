@@ -1,5 +1,5 @@
 import { APP_READY } from '../actionTypes';
-import { AsyncStorage } from 'expo';
+import { AsyncStorage } from 'react-native';
 import { loginUser } from './auth';
 
 export const initializeApp = () => async dispatch => {

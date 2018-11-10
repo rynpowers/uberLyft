@@ -3,7 +3,7 @@ import { Facebook } from 'expo';
 import { FB_LOGIN_SUCCESS, FB_LOGIN_FAIL } from '../actionTypes';
 
 export const loginUser = token => ({ type: FB_LOGIN_SUCCESS, token });
-const loginUserFail = () => ({ type: FB_LOGIN_FAIL });
+export const loginUserFail = () => ({ type: FB_LOGIN_FAIL });
 
 const doFacebookLogin = async dispatch => {
   let { type, token } = await Facebook.logInWithReadPermissionsAsync(
