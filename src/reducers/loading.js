@@ -2,6 +2,7 @@ import { APP_READY } from '../actions/actionTypes';
 
 const initialState = {
   appReady: false,
+  mapReady: false,
 };
 
 const loading = (state = initialState, action) => {

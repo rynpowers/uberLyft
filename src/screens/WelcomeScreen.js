@@ -3,6 +3,7 @@ import { View, ActivityIndicator, AsyncStorage } from 'react-native';
 import { connect } from 'react-redux';
 import Slides from '../components/Slides';
 import { initializeApp } from '../actions';
+import Spinner from '../components/Spinner';
 
 const SLIDE_DATA = [
   { text: 'Welcome to UberLyft', color: '#e056fd' },
@@ -36,22 +37,9 @@ class WelcomeScreen extends Component {
   };
 
   render() {
-    if (!this.props.appReady) {
-      return (
-        <View
-          style={{
-            flex: 1,
-            justifyContent: 'center',
-            alignItems: 'center',
-            backgroundColor: '#000',
-          }}
-        >
-          <ActivityIndicator size="large" />
-        </View>
-      );
-    }
-
-    return (
+    return !this.props.appReady ? (
+      <Spinner />
+    ) : (
       <View style={{ flex: 1 }}>
         <Slides data={SLIDE_DATA} onComplete={this.onSlidesComplete} />
       </View>
