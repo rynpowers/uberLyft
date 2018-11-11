@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, ActivityIndicator, AsyncStorage } from 'react-native';
+import { View, AsyncStorage } from 'react-native';
 import { connect } from 'react-redux';
 import Slides from '../components/Slides';
 import { initializeApp } from '../actions';
@@ -18,12 +18,10 @@ const SLIDE_DATA = [
 ];
 
 class WelcomeScreen extends Component {
-  componentDidMount() {
-    // await AsyncStorage.removeItem('fb_token');
+  async componentDidMount() {
+    await AsyncStorage.removeItem('fb_token');
 
-    setTimeout(() => {
-      this.props.initializeApp();
-    }, 1000);
+    this.props.initializeApp();
   }
 
   componentDidUpdate() {

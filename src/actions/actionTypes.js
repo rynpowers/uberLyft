@@ -4,5 +4,9 @@ export const FB_LOGIN_SUCCESS = 'FB_LOGIN_SUCCESS';
 export const FB_LOGIN_FAIL = 'FB_LOGIN_FAIL';
 
 export const APP_READY = 'APP_READY';
+export const MAP_READY = 'MAP_READY';
 
 export const GET_MAP_REGION = 'GET_MAP_REGION';
+export const SET_MAP_REGION_START = 'GET_MAP_REGION_START';
+export const UPDATE_SEARCH_TEXT = 'UPDATE_SEARCH_TEXT';
+export const UPDATE_LOCATIONS = 'UPDATE_LOCATIONS';
