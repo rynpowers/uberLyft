@@ -2,6 +2,9 @@ import {
   GET_MAP_REGION,
   SET_MAP_REGION_START,
   SET_MAP_REGION_END,
+  OPEN_SEARCH,
+  CLOSE_SEARCH,
+  RESET_END,
 } from '../actions';
 
 const initialState = {
@@ -14,6 +17,7 @@ const initialState = {
     latitude: 0,
     longitude: 0,
   },
+  modalOpen: false,
 };
 
 const map = (state = initialState, action) => {
@@ -23,13 +27,24 @@ const map = (state = initialState, action) => {
     case SET_MAP_REGION_START:
       return {
         ...state,
-        start: { longitude: action.longitude, latitude: action.latitude },
+        start: {
+          longitude: action.longitude,
+          latitude: action.latitude,
+        },
+        modalOpen: false,
       };
     case SET_MAP_REGION_END:
       return {
         ...state,
         end: action.place,
+        modalOpen: false,
       };
+    case OPEN_SEARCH:
+      return { ...state, modalOpen: true };
+    case CLOSE_SEARCH:
+      return { ...state, modalOpen: false };
+    case RESET_END:
+      return { ...state, end: {} };
     default:
       return state;
   }

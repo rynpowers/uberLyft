@@ -19,7 +19,7 @@ const SLIDE_DATA = [
 
 class WelcomeScreen extends Component {
   async componentDidMount() {
-    await AsyncStorage.removeItem('fb_token');
+    // await AsyncStorage.removeItem('fb_token');
 
     this.props.initializeApp();
   }

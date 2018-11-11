@@ -5,6 +5,9 @@ import DeckCard from './DeckCard';
 const SCREEN_WIDTH = Dimensions.get('window').width;
 
 const DeckList = ({ lyft, uber }) => {
+  console.log('#####################################');
+  console.log(uber, lyft);
+  console.log('#####################################');
   return lyft.map((item, i) => (
     <View
       key={i}

@@ -3,6 +3,13 @@ import { Card } from 'react-native-elements';
 import { Text } from 'react-native';
 
 const DeckCard = ({ ride, image, priceAdjust }) => {
+  if (!ride)
+    return (
+      <Card title="Currently no options" image={image}>
+        <Text>Currently no options</Text>
+      </Card>
+    );
+
   let { type, min, max, time, distance } = ride;
 
   [min, max] = priceAdjust ? [min / 100, max / 100] : [min, max];

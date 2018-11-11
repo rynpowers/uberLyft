@@ -4,10 +4,17 @@ import {
   MAP_READY,
   UPDATE_SEARCH_TEXT,
   SET_MAP_REGION_END,
+  OPEN_SEARCH,
+  CLOSE_SEARCH,
+  RESET_END,
 } from '../actionTypes';
 import { Location, Permissions } from 'expo';
 
 export const getMapRegion = region => ({ type: GET_MAP_REGION, region });
+
+export const openSearch = () => ({ type: OPEN_SEARCH });
+export const closeSearch = () => ({ type: CLOSE_SEARCH });
+export const resetEnd = () => ({ type: RESET_END });
 
 export const updateSearchText = text => ({ type: UPDATE_SEARCH_TEXT, text });
 
