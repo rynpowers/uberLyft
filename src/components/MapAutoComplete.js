@@ -1,5 +1,12 @@
 import React from 'react';
-import { View, TextInput, Text, StyleSheet, Dimensions } from 'react-native';
+import {
+  View,
+  TextInput,
+  Text,
+  StyleSheet,
+  Dimensions,
+  TouchableOpacity,
+} from 'react-native';
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 
@@ -21,9 +28,19 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     width: SCREEN_WIDTH,
   },
+  item: {
+    height: 40,
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    justifyContent: 'center',
+  },
 });
 
-const MapAutoComplete = ({ handleTextChange, inputValue, locationResults }) => {
+const MapAutoComplete = ({
+  handleTextChange,
+  inputValue,
+  locationResults,
+  handlePress,
+}) => {
   return (
     <View style={styles.textInputView}>
       <TextInput
@@ -34,11 +51,17 @@ const MapAutoComplete = ({ handleTextChange, inputValue, locationResults }) => {
         debounce={500}
         min={5}
       />
-      {locationResults.map((item, i) => (
-        <View key={i}>
-          <Text>{item.description}</Text>
-        </View>
-      ))}
+      {locationResults.map(item => {
+        return (
+          <TouchableOpacity
+            onPress={() => handlePress(item.place_id)}
+            style={styles.item}
+            key={item.id}
+          >
+            <Text>{item.description}</Text>
+          </TouchableOpacity>
+        );
+      })}
     </View>
   );
 };

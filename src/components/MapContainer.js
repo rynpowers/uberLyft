@@ -3,11 +3,7 @@ import { View, StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
 import { MapView } from 'expo';
 import { GoogleAutoComplete } from 'react-native-google-autocomplete';
-import {
-  getMapRegion,
-  updateSearchTextThunk,
-  updateLocationsThunk,
-} from '../actions';
+import { getMapRegion, selectPlaceThunk } from '../actions';
 import MapAutoComplete from '../components/MapAutoComplete';
 import config from '../../secrets';
 const { Marker } = MapView;
@@ -23,13 +19,17 @@ class MapContainer extends Component {
     this.props.getMapRegion(region);
   };
 
-  handleChange = (text, fn) => {
-    console.log(text, fn);
-    this.props.updateSearchTextThunk(text, fn);
+  handlePress = (fn, id) => {
+    this.props.selectPlaceThunk({ id, fn });
   };
 
   render() {
-    const { region, start, searchText, locations } = this.props;
+    let { region, start, end } = this.props;
+
+    if (start.latitude && end.latitude) {
+      // region = { ...region, latitudeDelta: 0.08, longitudeDelta: 0.08 };
+    }
+
     return (
       <View style={{ flex: 1, position: 'relative' }}>
         <MapView
@@ -38,17 +38,21 @@ class MapContainer extends Component {
           onRegionChangeComplete={this.onRegionChangeComplete}
         >
           <Marker key={1} title="Start" coordinate={start} />
+          {!!end.latitude && <Marker key={2} title="end" coordinate={end} />}
         </MapView>
         <GoogleAutoComplete apiKey={config().googleApiKey}>
-          {({ handleTextChange, locationResults }) => {
-            this.props.updateLocationsThunk(locationResults);
+          {({
+            inputValue,
+            handleTextChange,
+            locationResults,
+            fetchDetails,
+          }) => {
             return (
               <MapAutoComplete
-                inputValue={searchText}
-                handleTextChange={text =>
-                  this.handleChange(text, handleTextChange)
-                }
-                locationResults={locations}
+                inputValue={inputValue}
+                handleTextChange={handleTextChange}
+                locationResults={locationResults}
+                handlePress={this.handlePress.bind(this, fetchDetails)}
               />
             );
           }}
@@ -61,11 +65,10 @@ class MapContainer extends Component {
 const mapStateToProps = ({ map }) => ({
   region: map.region,
   start: map.start,
-  searchText: map.searchText,
-  locations: map.locations,
+  end: map.end,
 });
 
 export default connect(
   mapStateToProps,
-  { getMapRegion, updateSearchTextThunk, updateLocationsThunk }
+  { getMapRegion, selectPlaceThunk }
 )(MapContainer);

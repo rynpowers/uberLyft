@@ -1,8 +1,7 @@
 import {
   GET_MAP_REGION,
   SET_MAP_REGION_START,
-  UPDATE_SEARCH_TEXT,
-  UPDATE_LOCATIONS,
+  SET_MAP_REGION_END,
 } from '../actions';
 
 const initialState = {
@@ -11,8 +10,10 @@ const initialState = {
     latitude: 0,
     longitude: 0,
   },
-  searchText: '',
-  locations: [],
+  end: {
+    latitude: 0,
+    longitude: 0,
+  },
 };
 
 const map = (state = initialState, action) => {
@@ -24,10 +25,11 @@ const map = (state = initialState, action) => {
         ...state,
         start: { longitude: action.longitude, latitude: action.latitude },
       };
-    case UPDATE_SEARCH_TEXT:
-      return { ...state, searchText: action.text };
-    case UPDATE_LOCATIONS:
-      return { ...state, locations: action.locations };
+    case SET_MAP_REGION_END:
+      return {
+        ...state,
+        end: action.place,
+      };
     default:
       return state;
   }

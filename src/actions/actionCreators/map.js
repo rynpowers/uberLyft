@@ -3,7 +3,7 @@ import {
   SET_MAP_REGION_START,
   MAP_READY,
   UPDATE_SEARCH_TEXT,
-  UPDATE_LOCATIONS,
+  SET_MAP_REGION_END,
 } from '../actionTypes';
 import { Location, Permissions } from 'expo';
 
@@ -16,12 +16,6 @@ export const setMapRegionStart = (longitude, latitude) => ({
   longitude,
   latitude,
 });
-
-export const updateSearchTextThunk = (text, fn) => (dispatch, getState) => {
-  dispatch(updateSearchText(text));
-  const updatedText = getState().map.searchText;
-  fn(updatedText);
-};
 
 export const setMapRegionStartThunk = () => async dispatch => {
   try {
@@ -44,8 +38,16 @@ export const setMapRegionStartThunk = () => async dispatch => {
   }
 };
 
-export const updateLocationsThunk = locations => (dispatch, getState) =>
+export const selectPlaceThunk = ({ id, fn }) => async (dispatch, getState) => {
+  const place = await fn(id);
+  const { lat, lng } = place.geometry.location;
   dispatch({
-    type: UPDATE_LOCATIONS,
-    locations,
+    type: SET_MAP_REGION_END,
+    place: { latitude: lat, longitude: lng },
   });
+
+  dispatch({
+    type: GET_MAP_REGION,
+    region: { ...getState().map.region, latitude: lat, longitude: lng },
+  });
+};
