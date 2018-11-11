@@ -13,7 +13,6 @@ class MapScreen extends Component {
 
   componentDidMount() {
     this.props.setMapRegionStartThunk();
-    console.log('COMPONENT DID MOUNT');
   }
 
   componentDidUpdate(props) {
